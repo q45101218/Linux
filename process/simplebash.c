@@ -10,6 +10,7 @@
 #include<stdlib.h>
 #include<sys/types.h>
 #include<wait.h>
+#include<string.h>
 
 void Resolve(char* buf,char* argv[])
 {
@@ -52,13 +53,14 @@ void Mybash()
         char* argv[10]={NULL};
         printf("[root@yangkun]#");
         gets(buf);
-        fflush(stdout);
+        //fflush(stdout);
         Resolve(buf,argv);
         //test(argv);
         pid_t ret=fork();
         if(ret==0)
         {
-            execv("/usr/bin/ls",argv);
+            //execv("/usr/bin/ls",argv);
+            execvp(argv[0],argv);
             exit(0);
         }
         else if(ret>0)
