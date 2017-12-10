@@ -15,8 +15,20 @@ int main()
 {
     close(1);
     int fd=open("./txt.md",O_WRONLY | O_CREAT,0666);
+    if(fd<0)
+    {
+        perror("open");
+        exit(1);
+    }
+
     printf("file despcrition:%d\n",fd);
-    write(1,"hello world\n",12);
+    ssize_t size=write(1,"hello world\n",12);
+    if(size<0)
+    {
+        perror("write");
+        close(fd);
+        exit(1);
+    }
     close(fd);
     return 0;
 }

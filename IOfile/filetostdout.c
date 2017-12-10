@@ -16,12 +16,21 @@
 int main()
 {
     int fd=open("./txt.md",O_RDONLY);
+    if(fd<0)
+    {
+        perror("open");
+        exit(1);
+    }
+
     char buf[1024]={0};
     ssize_t size=read(fd,buf,sizeof(buf)-1);
-    if(size>0)
+    if(size<0)
     {
-        write(1,buf,sizeof(buf));
+        perror("read");
+        exit(2);
     }
+
+    write(1,buf,sizeof(buf));
     close(1);
     return 0;
 }
