@@ -19,6 +19,10 @@ int main()
     //in first kind of option,and second comparative,we find write() hasn't buffer,so direct output at screen.
     //according to fork(),buffer was duplicated to child's processing,so the value can be output twice.
 
+    //but in fwrite() and printf() primary reason was buffering method changed by char '\n'.
+    //if buffer has '\n' at end of string,buffer uses line buffer.
+    //another condition,buffer uses fully buffered.
+    
 
     char buf1[]="printf-->hello world";
     char buf2[]="fwrite-->hello world";
