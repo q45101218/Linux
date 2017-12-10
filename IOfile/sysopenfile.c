@@ -13,9 +13,10 @@
 
 int main()
 {
-    int fd=open("./txt.md",O_WRONLY | O_CREAT,0666);
     close(1);
+    int fd=open("./txt.md",O_WRONLY | O_CREAT,0666);
     printf("file despcrition:%d\n",fd);
+    write(1,"hello world\n",12);
     close(fd);
     return 0;
 }
