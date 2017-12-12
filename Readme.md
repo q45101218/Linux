@@ -1,7 +1,7 @@
 # Test for Linux
 It's my Linux operator system test.
 
->1.Process
+\>1.Process
   by using fork(),parent creat a child process.
   using vfork(),parent was altered by child process.
   if child don't exit,child will be a orphan process after parent exit.Then bash will adopt this child process.
