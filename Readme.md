@@ -15,7 +15,7 @@ It's my Linux operator system test.
   distinction between soft link and hard link.<br>
 
 ## 3.Communication
-### 1.anonymous pipe
+>### 1.anonymous pipe
   pipe() and pipe2(),pipe2() can set a method which will set erron when pipe was be filled with datas or pipe hasn't datas to read.<br>
   pipe description can be duplicated by fork() to child process that refer to same pipe.<br>
   if close read of pipe(pipe\[0]),process will receive a signal which will close process.<br>
