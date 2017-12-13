@@ -19,3 +19,7 @@ It's my Linux operator system test.
   pipe() and pipe2(),pipe2() can set a method which will set erron when pipe was be filled with datas or pipe hasn't datas to read.<br>
   pipe description can be duplicated by fork() to child process that refer to same pipe.<br>
   if close read of pipe(pipe\[0]),process will receive a signal which will close process.<br>
+  pipe() only was used in Biological process.<br>
+
+>### 2.pipe
+  
