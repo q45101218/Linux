@@ -21,5 +21,10 @@ It's my Linux operator system test.
   if close read of pipe(pipe\[0]),process will receive a signal which will close process.<br>
   pipe() only was used in Biological process.<br>
 
->### 2.pipe
+>### 2.FIFO
+  make FIFO file used to communication.
+  FIFO is like pipe,and they have the similar function and property.
   
+
+>### 3.message queue
+
