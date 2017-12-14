@@ -22,9 +22,9 @@ It's my Linux operator system test.
   pipe() only was used in Biological process.<br>
 
 >### 2.FIFO
-  make FIFO file used to communication.
-  FIFO is like pipe,and they have the similar function and property.
-  
+  make FIFO file used to communication.<br>
+  a FIFO special file is simmilar to a pipe,and they have the similar function and property.<br>
+  after creat a FIFO file,operation of FIFO is like operating a reguler file.<br>
 
 >### 3.message queue
 
