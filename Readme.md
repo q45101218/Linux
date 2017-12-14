@@ -25,6 +25,7 @@ It's my Linux operator system test.
   make FIFO file used to communication.<br>
   a FIFO special file is simmilar to a pipe,and they have the similar function and property.<br>
   after creat a FIFO file,operation of FIFO is like operating a reguler file.<br>
+  use mkfifo() to create a FIFO file,umask() to change permission.<br>
 
 >### 3.message queue
 
