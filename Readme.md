@@ -26,6 +26,8 @@ It's my Linux operator system test.
   a FIFO special file is simmilar to a pipe,and they have the similar function and property.<br>
   after creat a FIFO file,operation of FIFO is like operating a reguler file.<br>
   use mkfifo() to create a FIFO file,umask() to change permission.<br>
+  if close write of FIFO,read of FIFO can read until FIFO resources were used up.<br>
+  if close read of FIFO,process will exit immediately.<br>
 
 >### 3.message queue
 
