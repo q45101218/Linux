@@ -28,6 +28,7 @@ It's my Linux operator system test.
   use mkfifo() to create a FIFO file,umask() to change permission.<br>
   if close write of FIFO,read of FIFO can read until FIFO resources were used up.<br>
   if close read of FIFO,process will exit immediately.<br>
+  while process is finished,the FIFO is also finished.<br>
 
 >### 3.message queue
 
