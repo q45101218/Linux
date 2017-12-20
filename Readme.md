@@ -37,5 +37,7 @@ It's my Linux operator system test.
   use msgsnd() to send message queue information,and use msgrec() to receive the information that is in message queue.<br>
 
 >### 4.shared memory
+  shared memory must be most efficient way beacasue kornel directly control it.<br>
 
-
+>### 5.semaphore
+  
