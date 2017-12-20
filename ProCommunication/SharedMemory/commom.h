@@ -23,4 +23,6 @@ int getshm();
 int createshm();
 int getshmid();
 void destory();
+char* connection();
+void disconnection();
 #endif

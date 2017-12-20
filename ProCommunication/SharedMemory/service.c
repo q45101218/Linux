@@ -9,9 +9,25 @@
 
 void service()
 {
-    int shmid=createshm();
-    sleep(3);
-    destory(shmid);
+    char* buf=connection(createshm(1024));
+    while(1)
+    {
+        char tmp[1024]={0};
+        ssize_t size=read(0,tmp,sizeof(tmp));
+        if(size==0)
+        {
+            printf("end of screen\n");
+            eixt(1);
+        }
+        else if(size<0)
+        {
+            perror("read");
+            exit(1);
+        }
+        
+        printf("%s",buf);
+    }
+    //destory(shmid);
 }
 int main()
 {

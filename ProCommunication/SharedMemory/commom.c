@@ -18,9 +18,9 @@ key_t getkey()
     return key;
 }
 
-int getshm(key_t key,int flag)
+int getshm(key_t key,int flag,int size)
 {
-    int ret=shmget(key,1024,flag);
+    int ret=shmget(key,size,flag);
     if(ret==-1)
     {
         perror("shmget");
@@ -29,14 +29,14 @@ int getshm(key_t key,int flag)
     return ret;
 }
 
-int createshm()
+int createshm(int size)
 {
-    return getshm(getkey(),IPC_CREAT | IPC_EXCL);
+    return getshm(getkey(),IPC_CREAT | IPC_EXCL | 0666,size);
 }
 
 int getshmid()
 {
-    return getshm(getkey(),IPC_CREAT);
+    return getshm(getkey(),IPC_CREAT,0);
 }
 
 void destory(int id)
@@ -48,4 +48,26 @@ void destory(int id)
         exit(1);
     }
     printf("successful\n");
+}
+
+char* connection(int shmid)
+{
+    char* ptr=(char*)shmat(shmid,NULL,0);
+    if(*(int*)ptr==-1)
+    {
+        perror("shmat");
+        exit(1);
+    }
+    return ptr;
+}
+
+void disconnection(void* ptr)
+{
+    int ret=shmdt(ptr);
+    if(ret==-1)
+    {
+        perror("shmdt");
+        exit(1);
+    }
+    printf("disconnecte successfully\n");
 }
