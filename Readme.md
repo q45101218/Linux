@@ -31,7 +31,7 @@ It's my Linux operator system test.
   while process is finished,the FIFO is also finished.<br>
 
 >### 3.message queue
-  firstly you should create a message queue to survice your communication by msgget(),and you must use msgctl() to destory it when the message queue created.<br>
+  firstly you should create a message queue to service your communication by msgget(),and you must use msgctl() to destory it when the message queue created.<br>
   if you don't use msgget() to destory massage queue you create,the message queue always stay in your IPC,though the process which use the message queue or create message queue end.<br>
   the message queue is a full duplex way to be used to process communication<br>
   use msgsnd() to send message queue information,and use msgrec() to receive the information that is in message queue.<br>
