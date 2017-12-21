@@ -14,6 +14,7 @@
 #include<sys/stat.h>
 #include<fcntl.h>
 #include<sys/shm.h>
+#include<string.h>
 
 #define PATH "."
 #define PRO_ID 1

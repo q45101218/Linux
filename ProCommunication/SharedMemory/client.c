@@ -9,7 +9,11 @@
 
 void client()
 {
-    int shmid=getshm();
+    char* buf=connection(getshmid());
+    while(1)
+    {
+        ssize_t size=write(1,buf,strlen(buf));
+    }
 }
 
 int main()

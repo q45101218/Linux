@@ -6,7 +6,7 @@
  ************************************************************************/
 
 #include"commom.h"
-
+#include<string.h>
 void service()
 {
     char* buf=connection(createshm(1024));
@@ -17,15 +17,14 @@ void service()
         if(size==0)
         {
             printf("end of screen\n");
-            eixt(1);
+            exit(1);
         }
         else if(size<0)
         {
             perror("read");
             exit(1);
         }
-        
-        printf("%s",buf);
+        strcpy(buf,tmp);
     }
     //destory(shmid);
 }
