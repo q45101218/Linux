@@ -40,4 +40,4 @@ It's my Linux operator system test.
   shared memory must be most efficient way beacasue kornel directly control it.<br>
 
 >### 5.semaphore(system V)
-  
+  use semget() to create a set of semaphore.<br>
