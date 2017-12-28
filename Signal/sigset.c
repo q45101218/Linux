@@ -31,13 +31,28 @@ void print(sigset_t p)
 int main()
 {
     sigset_t s,p;
-    sigemptyset(&s);
-    sigemptyset(&p);
-    sigaddset(&s,SIGINT);
-    sigprocmask(SIG_BLOCK,&s,NULL);
+    if(-1==sigemptyset(&s))
+    {
+        perror("sigemptyset");
+    }
+    if(-1==sigemptyset(&p))
+    {
+        perror("sigemptyset");
+    }
+    if(-1==sigaddset(&s,SIGINT))
+    {
+        perror("sigaddset");
+    }
+    if(sigprocmask(SIG_BLOCK,&s,NULL)==-1)
+    {
+        perror("sigprocmask");
+    }
     while(1)
     {
-        sigpending(&p);
+        if(-1==sigpending(&p))
+        {
+            perror("sigpending");
+        }
         print(p);
         sleep(1);
     }
