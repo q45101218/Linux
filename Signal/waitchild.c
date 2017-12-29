@@ -14,7 +14,7 @@
 void handler(int sig)
 {
     pid_t pid;
-    while(pid=waitpid(-1,NULL,WNOHANG)>0)
+    while((pid=waitpid(-1,NULL,WNOHANG))>0)
     {
         printf("success:");
         printf("pid:%d\n",pid);
