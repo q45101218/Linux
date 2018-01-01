@@ -42,4 +42,4 @@ It's my Linux operator system test.
 >### 5.semaphore(system V)
   use semget() to create a set of semaphore.<br>
 
-I am sick badly today.
+## 4.signal
