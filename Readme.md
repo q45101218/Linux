@@ -44,3 +44,6 @@ It's my Linux operator system test.
 
 ## 4.signal
   use signal() to set signal and handler function,and when recieve the special signal which we use signal() setting signal,the process will use handler function to handle the signal.
+
+
+## 5.thread
