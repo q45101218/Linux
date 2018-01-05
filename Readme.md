@@ -43,7 +43,9 @@ It's my Linux operator system test.
   use semget() to create a set of semaphore.<br>
 
 ## 4.signal
-  use signal() to set signal and handler function,and when recieve the special signal which we use signal() setting signal,the process will use handler function to handle the signal.
+  use signal() to set signal and handler function,and when recieve the special signal which we use signal() setting signal,the process will use handler function to handle the signal.<br>
 
 
-## 5.thread
+## 5.thread(POSIX)
+  create POXIS version thread though pthread\_create(),and then PCB add a struct to administrate this thread.<br>
+  when you want to get the information about id of thread,you can use pthread\_self(),or though the pthread\_create() to get the id.<br>
