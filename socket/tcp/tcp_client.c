@@ -17,7 +17,7 @@ void usage()
     printf("./tcp_client [ip] [port]\n");
 }
 
-int main(int argc,char* argv)
+int main(int argc,char* argv[])
 {
     if(argc!=3)
     {
@@ -25,5 +25,6 @@ int main(int argc,char* argv)
         exit(1);
     }
 
+    printf("%s\n",argv[1]);
     return 0;
 }
