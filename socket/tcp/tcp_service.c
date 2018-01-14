@@ -11,10 +11,11 @@
 #include<sys/stat.h>
 #include<sys/types.h>
 #include<fcntl.h>
+#include<sys/socket.h>
 
 void usage()
 {
-    printf(".//tcp_service [ip] [port]\n");
+    printf("./tcp_service [ip] [port]\n");
 }
 
 int main(int argc,char* argv)
@@ -24,5 +25,13 @@ int main(int argc,char* argv)
         usage();
         exit(1);
     }
+
+    int socketfd=socket(AF_INET,SOCK_STREAM,0);
+    if(socketfd<0)
+    {
+        perror("socket");
+        exit(2);
+    }
+
     return 0;
 }
