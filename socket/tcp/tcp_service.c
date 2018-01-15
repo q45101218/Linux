@@ -52,6 +52,40 @@ int main(int argc,char* argv[])
     }
 
     printf("%d\n",listenfd);
-    
+
+    struct sockaddr_in client;
+    socklen_t len=sizeof(client);
+    while(1)
+    {
+        int socketfd=accept(listenfd,(struct sockaddr*)&client,len);
+        if(socketfd==-1)
+        {
+            perror("accept");
+            exit(5);
+        }
+        char buf[1024];
+        printf("ip[%s] port[%d]\n",inet_ntoa(client.sin_addr),ntohs(client.sin_port));
+        while(1)
+        {
+            ssize_t size=read(socketfd,buf,sizeof(buf));
+            if(size==0)
+            {
+                printf("client exit\n");
+                break;
+            }
+            else if(size<0)
+            {
+                perror("read");
+                exit(6);
+            }
+            else
+            {
+                buf[size]=0;
+                printf("client:%s\n",buf);
+            }
+        }
+        close(socketfd);
+    }
+    close(listenfd);
     return 0;
 }
