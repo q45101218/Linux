@@ -14,10 +14,16 @@
 #include<sys/socket.h>
 #include<arpa/inet.h>
 #include<netinet/in.h>
+#include <signal.h>
 
 void usage()
 {
     printf("./tcp_client [ip] [port]\n");
+}
+
+void handler(int s)
+{
+    printf("catch signale %d\n", s);
 }
 
 int main(int argc,char* argv[])
@@ -27,6 +33,12 @@ int main(int argc,char* argv[])
         usage();
         exit(1);
     }
+
+    struct sigaction act;
+    act.sa_handler = handler;
+    act.sa_flags = 0;
+    sigemptyset(&act.sa_mask);
+    sigaction(SIGPIPE, &act, NULL);
 
     int fd=socket(AF_INET,SOCK_STREAM,0);
     if(fd<0)
@@ -46,11 +58,12 @@ int main(int argc,char* argv[])
         perror("connect");
         exit(3);
     }
+    printf("%d\n", fd);
     printf("connect service successfully\n");
     char buf[1024];
     while(1)
     {
-        ssize_t size=read(1,buf,sizeof(buf)-1);
+         ssize_t size=read(0,buf,sizeof(buf)-1);
         if(size<0)
         {
             perror("read");
