@@ -16,7 +16,8 @@
 #include<sys/socket.h>
 #include<sys/select.h>
 #include<netinet/ip.h>
-static int sfd[sizeof(fd_set)*8]={-1};
+
+static int sfd[sizeof(fd_set)*8];
 
 int startup(char** const argv)
 {
@@ -48,22 +49,33 @@ int startup(char** const argv)
 int main(int argc,char* argv[])
 {
     int listenfd=startup(argv);
-    sfd[0]=listenfd;
+    int j;
     fd_set fs;
+    int max=listenfd;
     int fdmax=sizeof(fd_set)*8;
+    int i=0;
+    for(;i<fdmax;i++)
+    {
+        sfd[i]=-1;
+    }
+    sfd[0]=listenfd;
+   // for(i=0;i<fdmax;i++)
+   // {
+   //     printf("%d ",sfd[i]);
+   // fflush(stdout);
+   // }
     while(1)
     {
         FD_ZERO(&fs);
-        int i=1;
-        for(;i<(fdmax);i++)
+        for(i=0;i<(fdmax);i++)
         {
             if(sfd[i]==-1)
             {
-                break;
+                continue;
             }
             FD_SET(sfd[i],&fs);
         }
-        if(select(fdmax+1,&fs,NULL,NULL,NULL)<0)
+        if(select(max+1,&fs,NULL,NULL,NULL)<0)
         {
             perror("select"),exit(5);
         }
@@ -82,6 +94,57 @@ int main(int argc,char* argv[])
                 else
                 {
                     printf("client %s:%d get line\n",inet_ntoa(client.sin_addr),ntohs(client.sin_port));
+                    for(i=0;i<fdmax;i++)
+                    {
+                        if(sfd[i]==-1)
+                        {
+                            sfd[i]=sockfd;
+                            printf("%d\n",sfd[i]);
+                            if(sockfd>max)
+                            {
+                                max=sockfd;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for(i=1;i<fdmax;i++)
+                {
+                    if(sfd[i]==-1||!FD_ISSET(sfd[i],&fs))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        static char buf[1024];
+                        ssize_t size=read(sfd[i],buf,sizeof(buf)-1);
+                        printf("%d\n",sfd[i]);
+                       // for(i=0;i<fdmax;i++)
+                       // {
+                       //     printf("%d ",sfd[i]);
+                       //     fflush(stdout);
+                       // }
+                        if(size<0)
+                        {
+                            perror("read"),exit(6);
+                        }
+                        else if(size==0)
+                        {
+                            printf("client exit\n");
+                            close(sfd[i]);
+                            sfd[i]=-1;
+                            FD_CLR(sfd[i],&fs);
+                        }
+                        else
+                        {
+                            buf[size]=0;
+                            printf("client:%s",buf);
+                            fflush(stdout);
+                        }
+                    }
                 }
             }
         }
