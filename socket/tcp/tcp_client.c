@@ -11,7 +11,7 @@
 #include<sys/stat.h>
 #include<sys/types.h>
 #include<fcntl.h>
-#include<sys/scoket.h>
+#include<sys/socket.h>
 #include<arpa/inet.h>
 #include<netinet/in.h>
 
@@ -35,13 +35,13 @@ int main(int argc,char* argv[])
         exit(2);
     }
 
-    struct sockeaddr_in client;
+    struct sockaddr_in client;
     client.sin_port=htons(atoi(argv[2]));
     client.sin_family=AF_INET;
-    inet_aton(argv[1],&client.sin_addr.s_addr);
+    inet_aton(argv[1],&client.sin_addr);
 
     socklen_t len=sizeof(client);
-    if(connect(fd,(struct sockeaddr*)&client,len)<0)
+    if(connect(fd,(struct sockaddr*)&client,len)<0)
     {
         perror("connect");
         exit(3);
@@ -58,11 +58,17 @@ int main(int argc,char* argv[])
         }
         if(size>0)
         {
-            char buf[size]=0;
+            buf[size]=0;
             size=write(fd,buf,sizeof(buf));
             if(size<0)
             {
                 perror("write");
+                exit(5);
+            }
+            if(size==0)
+            {
+                printf("service failed\n");
+                close(fd);
                 exit(5);
             }
         }
