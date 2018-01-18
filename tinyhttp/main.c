@@ -20,13 +20,13 @@ int main(int argc, char* argv[])
     }
 
     int listen_sock=startup(argv[1], atoi(argv[2]));
-
+    printf("%d\n",listen_sock);
     while(1)
     {
         struct sockaddr_in client;
         socklen_t len = sizeof(client);
         int new_sock = accept(listen_sock, (struct sockaddr*)&client, &len);
-
+        printf("%d\n",new_sock);
         if(new_sock < 0)
         {
             print_log(strerror(errno), NOTICE);
