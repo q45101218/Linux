@@ -14,7 +14,11 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/socket.h>
-#include <errno>
+#include <netinet/in.h>
+#include <netinet/ip.h>
+#include <arpa/inet.h>
+#include <pthread.h>
+#include <errno.h>
 #include <string.h>
 
 #define SUCCESS 0
@@ -22,7 +26,8 @@
 #define WARNING 2
 #define ERROR   3
 #define FATAL   4
-int startup(char* ip, int port);
-void printf_log(const char* msg, int level);
-void* handler_request(void* arg)
+#define SIZE    1024
+int startup(const char* ip, int port);
+void print_log(const char* msg, int level);
+void* handler_request(void* arg);
 #endif
