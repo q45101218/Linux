@@ -20,6 +20,9 @@
 #include <pthread.h>
 #include <errno.h>
 #include <string.h>
+#include <sys/sendfile.h>
+#include <sys/wait.h>
+#include <ctype.h>
 
 #define SUCCESS 0
 #define NOTICE  1

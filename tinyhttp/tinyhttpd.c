@@ -105,6 +105,7 @@ static int echo_www(int sock, char* path,int size)
     send(sock, echo_line, strlen(echo_line), 0);
     const char* null_line = "\r\n";
     send(sock, null_line, strlen(echo_line), 0);
+
     if(sendfile(sock, fd, NULL, size) < 0)
     {
         echo_string(sock);
@@ -140,7 +141,7 @@ static int exe_cgi(int sock, char* method, char* path, char* query_string)
         char line[1024];
         int ret = -1;
         do{
-            ret = getline(sock, line, sizeof(line));
+            ret = read(sock, line, sizeof(line));
             if(ret > 0 && strncasecmp(line, "content-length: ",16) == 0)
             {
                 content_len = atoi(&line[16]);
@@ -211,7 +212,7 @@ static int exe_cgi(int sock, char* method, char* path, char* query_string)
         c = '\0';
 
         while(read(output[0], &c, 1) > 0)
-        }
+        {
             send(sock, &c, 1, 0);
         }
         
