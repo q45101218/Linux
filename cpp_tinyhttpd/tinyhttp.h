@@ -19,7 +19,9 @@
 #include <arpa/inet.h>
 #include <pthread.h>
 #include <fcntl.h>
+#include <errno.h>
+#include <string.h>
 #include <iostream>
-
 using namespace std;
+class Tinyhttp;
 #endif

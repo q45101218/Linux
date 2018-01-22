@@ -19,5 +19,7 @@ int main(int argc, char* argv[])
     }
 
 
+    Tinyhttp th(string(agrv[1]), string(argv[2]));
+    cout << "ready for accept" << endl;
     return 0;
 }

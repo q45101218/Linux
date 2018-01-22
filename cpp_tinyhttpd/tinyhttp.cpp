@@ -19,9 +19,15 @@ enum ERRNO_TYPE
 class Tinyhttp
 {
 public:
-    Tinyhttp(const char* argv1, const char* argv2)
+    //Tinyhttp()
+    //{
+    //    cout << "Tinyhttp()" << endl;    
+    //}
+
+    Tinyhttp(string& argv1, string& argv2)
+    :listen_sock(_init_service(argv1, argv2))
     {
-        _init_service(argv1, argv2);
+        cout << listen_sock << endl;
     }
 
     ~Tinyhttp()
@@ -29,7 +35,7 @@ public:
 
     void print_log(char* err, ERRNO_TYPE errtp)
     {
-        static char* errmsg[] = 
+        static string errmsg[] = 
         {
             "SUCCESS",
             "NOTICE",
@@ -37,14 +43,13 @@ public:
             "ERRNO",
             "FATAL"
         };
-        printf("%s %s\n",err, errmsg[errtp]);
+        cout << err << errmsg[errtp] << endl;
     }
 
-private:
-    int _init_service(const char* argv1,const char* argv2)
+    int _init_service(string& argv1, string& argv2)
     {
-        int listen_sock = sock(AF_INET, SOCK_STREAM, 0);
-        if(sock < 0)
+        socket(AF_INET, SOCK_STREAM, 0);
+        if(listen_sock < 0)
         {
             print_log(strerror(errno), FATAL);
             exit(1);
@@ -52,15 +57,24 @@ private:
 
         struct sockaddr_in service;
         service.sin_family = AF_INET;
-        service.sin_port = htons(atoi(argv2));
-        service.sin_addr.s_addr = inet_addr(argv1);
+        service.sin_port = htons(atoi(argv2.c_str()));
+        service.sin_addr.s_addr = inet_addr(argv1.c_str());
+        socklen_t len = sizeof(service);
 
-        if(!bind(listen_sock, (struct sock_addr*)&service, sizeof(service)))
+        if(!bind(listen_sock, (struct sockaddr*)&service, len))
         {
             printf(strerror(errno), FATAL);
             exit(2);
         }
 
-        if(listen(listen_sock, 10))
+        if( !listen(listen_sock, 10))
+        {
+            print_log(strerror(errno), FATAL);
+            exit(3);
+        }
+        return listen_sock;
     }
+
+private:
+    int listen_sock;
 };

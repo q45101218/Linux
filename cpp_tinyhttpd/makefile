@@ -1,5 +1,5 @@
 
-tinyhttp:main.cpp tinyhttp.cpp  
+tinyhttp:main.cpp tinyhttp.cpp
 	g++ $^ -o $@ -lpthread
 
 .PHONY:clean
