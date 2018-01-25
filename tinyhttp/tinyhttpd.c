@@ -88,7 +88,7 @@ static int get_line(int sock, char line[], int size)
     return len;
 }
 
-static void echo_string()
+static void echo_string(int sock)
 {}
 
 static int echo_www(int sock, char* path,int size)

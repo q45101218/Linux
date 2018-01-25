@@ -18,9 +18,10 @@ int main(int argc, char* argv[])
         Usage(argv[0]);
     }
 
-    string s1(argv[1]);string s2(argv[2]);
+    string s1(argv[1]);
+    string s2(argv[2]);
     Tinyhttp th(s1, s2);
-    th.listen_sock;
+    th.start();
     cout << "ready for accept" << endl;
     return 0;
 }
