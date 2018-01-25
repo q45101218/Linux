@@ -5,7 +5,7 @@
 	> Created Time: Fri 19 Jan 2018 11:19:19 AM CST
  ************************************************************************/
 #include "tinyhttp.h"
-
+#include "tinyhttp.cpp"
 static void Usage(const char* argv)
 {
     printf("Usage page:\t%s [local_ip] [local_port]\n",argv);
@@ -18,8 +18,9 @@ int main(int argc, char* argv[])
         Usage(argv[0]);
     }
 
-
-    Tinyhttp th(string(agrv[1]), string(argv[2]));
+    string s1(argv[1]);string s2(argv[2]);
+    Tinyhttp th(s1, s2);
+    th.listen_sock;
     cout << "ready for accept" << endl;
     return 0;
 }

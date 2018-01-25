@@ -19,12 +19,8 @@ enum ERRNO_TYPE
 class Tinyhttp
 {
 public:
-    //Tinyhttp()
-    //{
-    //    cout << "Tinyhttp()" << endl;    
-    //}
 
-    Tinyhttp(string& argv1, string& argv2)
+    Tinyhttp(string argv1 = "8080", string argv2 = "0")
     :listen_sock(_init_service(argv1, argv2))
     {
         cout << listen_sock << endl;
@@ -75,6 +71,6 @@ public:
         return listen_sock;
     }
 
-private:
+public:
     int listen_sock;
 };
