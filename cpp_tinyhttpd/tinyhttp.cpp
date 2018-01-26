@@ -1,8 +1,8 @@
 /*************************************************************************
-	> File Name: tinyhttp.cpp
-	> Author:yangkun 
-	> Mail:yangkungetit@163.com 
-	> Created Time: Fri 19 Jan 2018 11:18:05 AM CST
+    > File Name: tinyhttp.cpp
+    > Author:yangkun 
+    > Mail:yangkungetit@163.com 
+    > Created Time: Fri 19 Jan 2018 11:18:05 AM CST
  ************************************************************************/
 
 #include "tinyhttp.h"
@@ -31,8 +31,9 @@ public:
 
     int start()
     {
-        sockaddr_in client;
-        socklen_t len;
+        struct sockaddr_in client;
+        socklen_t len = sizeof(client);
+        cout << inet_ntoa(client.sin_addr) << ntohs(client.sin_port) << endl;
         while(1)
         {
             int new_sock = accept(listen_sock, (struct sockaddr*)&client, &len);
@@ -43,11 +44,16 @@ public:
             }
             
             cout << "client :" << " "<< "["<< inet_ntoa(client.sin_addr) << "]" \
-            << " " << "[" << ntohs(client.sin_port) << "]  " << "get line\n";
-            char buf[1024];
-            ssize_t size = read(new_sock, buf, 1024);
-            buf[size] = 0;
-            write( 1, buf, strlen(buf));
+            << " " << "[" << ntohs(client.sin_port) << "]  " << "get line" << endl;
+            
+            while(1)
+            {          
+                char buf[1024];
+                ssize_t size = read(new_sock, buf, 1024);
+                buf[size] = 0;
+                cout << buf <<endl;
+            }
+            
         }
     }
 
