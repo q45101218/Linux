@@ -12,8 +12,9 @@
 
 void* function(void* parameter)
 {
-    int retval=1;
-    pthread_exit(&retval);
+    void* retval = malloc(sizeof(int));
+    *(int*)retval = 5;
+    pthread_exit(retval);
 }
 
 int main()
@@ -22,14 +23,15 @@ int main()
     int ret=pthread_create(&thread,NULL,function,NULL);
     if(ret!=0)
     {
-        printf("%s",strerror(ret));
+        printf("%s\n",strerror(ret));
     }
-    void* retvalp;
-    ret=pthread_join(thread,&retvalp);
+
+    void* retval = NULL;
+    ret=pthread_join(thread, &retval);
     if(ret!=0)
     {
         printf("%s",strerror(ret));
     }
-    printf("%d\n",*(int*)retvalp);
+    printf("%d\n",*(int*)retval);
     return 0;
 }
