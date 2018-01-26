@@ -46,17 +46,17 @@ public:
             cout << "client :" << " "<< "["<< inet_ntoa(client.sin_addr) << "]" \
             << " " << "[" << ntohs(client.sin_port) << "]  " << "get line" << endl;
             
-            while(1)
-            {          
-                char buf[1024];
-                ssize_t size = read(new_sock, buf, 1024);
-                buf[size] = 0;
-                cout << buf <<endl;
-            }
+            char buf[1024];
+            ssize_t size = read(new_sock, buf, 1024);
+            buf[size] = 0;
+            cout << buf <<endl;
+
             
         }
     }
 
+    void* handler(void* arg)
+    {}
     void print_log(char* err, int errtp)
     {
         static string errmsg[] = 
