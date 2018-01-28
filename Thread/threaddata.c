@@ -1,4 +1,5 @@
 /*************************************************************************
+
 	> File Name: threaddata.c
 	> Author:yangkun 
 	> Mail:yangkungetit@163.com 
@@ -11,16 +12,24 @@
 #include <pthread.h>
 
 int g_val = 0;
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 void* entrance(void* arg)
 {
     int i = 0;
     for(; i < 5000; i++)
-    g_val++;
+    {
+        pthread_mutex_lock(&mutex);
+        g_val++;
+        pthread_mutex_unlock(&mutex);
+        usleep(1000);
+    }
 }
 
 int main()
 {
+    //pthread_mutex_init(&mutex, NULL);
+
     pthread_t tid1;
     pthread_t tid2;
 
@@ -39,6 +48,9 @@ int main()
 
     pthread_join(tid1,NULL);
     pthread_join(tid2,NULL);
+
+    pthread_mutex_destroy(&mutex);
+
     //if(pthread_detach(tid1) != 0)
     //{
     //    printf("pthread_detach\n");
