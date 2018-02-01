@@ -49,3 +49,6 @@ It's my Linux operator system test.
 ## 5.thread(POSIX)
   create POXIS version thread though pthread\_create(),and then PCB add a struct to administrate this thread.<br>
   when you want to get the information about id of thread,you can use pthread\_self(),or though the pthread\_create() to get the id.<br>
+  the pthread\_self() can return pid of thread.when you create a thread,you must use wait the thread though the function pthread\_join().<br>
+  if you don't wanan wait a thread,you could pthread\_detach() to separate thread from main thread.<br>
+
