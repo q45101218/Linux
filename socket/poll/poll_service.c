@@ -60,7 +60,9 @@ void add(struct pollfd* p, int size, int fd)
     {
         if(p[i].fd == -1)
         {
-
+            p[i].fd = fd;
+            p[i].events = POLLIN;
+            break;
         }
     }
 }
@@ -71,10 +73,70 @@ int main()
     printf("%d\n",sockfd);
 
     struct pollfd pfd[10];
-    
+    init(pfd, sizeof(pfd)/sizeof(pfd[0]));
+    add(pfd, sizeof(pfd)/sizeof(pfd[0]), sockfd);
     while(1)
     {
-        
+        int ret = poll(pfd, sizeof(pfd)/sizeof(pfd[0]), -1);
+        if(ret < 0)
+        {
+            perror("poll");
+            continue;
+        }
+        else if(ret == 0)
+        {
+            continue;
+        }
+        else
+        {
+            int i = 0;
+            for(; i < sizeof(pfd)/sizeof(pfd[0]); i++)
+            {
+                if(pfd[i].fd == -1 | pfd[i].revents != POLLIN)
+                {
+                    continue;
+                }
+                else
+                {
+                    if(pfd[i].fd == sockfd)
+                    {
+                        struct sockaddr_in client;
+                        socklen_t len = sizeof(client);
+                        int confd = accept(sockfd, (struct sockaddr*)&client, &len);
+                        if(confd == -1)
+                        {
+                            perror("accept");
+                            continue;
+                        }
+                        else
+                        {
+                            add(pfd, sizeof(pfd)/sizeof(pfd[0]), confd);
+                            printf("client get line\n");
+                        }
+                    }
+                    else
+                    {
+                        char buf[1024] = {0};
+                        ssize_t sz = read(pfd[i].fd, buf, sizeof(buf));
+                        if(sz == 0)
+                        {
+                            close(pfd[i].fd);
+                            pfd[i].fd = -1;
+                            printf("client quit\n");
+                        }
+                        else if(sz < 0)
+                        {
+                            perror("read");
+                            continue;
+                        }
+                        else
+                        {
+                            printf("client say#:%s", buf);
+                        }
+                    }
+                }
+            }
+        }
     }
     return 0;
 }
